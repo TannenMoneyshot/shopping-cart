@@ -1,15 +1,18 @@
 import React from 'react';
-import CartItems from './CartItems';
 
-const CartItem = () =>(
+const CartItem = (
+  {name,
+  price,
+  qty
+  }) =>(
 <div class="list-group-item">
   <div class="row">
-    <div class="col-md-8">Mediocre Iron Watch</div>
-    <div class="col-md-2">$3.99</div>
-    <div class="col-md-2">1</div>
+    <div class="col-md-8">{name}</div>
+    <div class="col-md-2">{price}</div>
+    <div class="col-md-2">{qty}</div>
   </div>
 </div>
 );
 
 
-export default CartItems;
+export default CartItem;

@@ -12,7 +12,7 @@ const CartItems = ({cartItems}) =>(
         <div className="col-md-2">Quantity</div>
       </div>
     </div>
-    {cartItems.map((cartItem) => <CartItem key = {cartItem.id}/>)}
+    {cartItems.map((cartItem) => <CartItem key = {cartItem.id} name = {cartItem.product.name} price = {cartItem.product.priceInCents} qty = {cartItem.quantity} />)}
   </div>
 </div>
 );

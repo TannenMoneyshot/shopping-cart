@@ -1,9 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import CartHeader from './CartHeader'
 import CartFooter from './CartFooter'
 import CartItems from './CartItems'
-import { render } from '@testing-library/react';
 
 function App() {
   let cartItemList = [
@@ -17,7 +15,7 @@ function App() {
         <CartHeader />
       </header>
       <main>
-        <CartItems cartItmes = {cartItemList} />
+        <CartItems cartItems = {cartItemList} />
       </main>
       <footer>
         <CartFooter copyright="&copy;" year="2016" />
