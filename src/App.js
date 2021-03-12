@@ -14,7 +14,7 @@ function App() {
         <CartItems />
       </main>
       <footer>
-        <CartFooter />
+        <CartFooter copyright="&copy;" year="2016" />
       </footer>
     </div>
   );
