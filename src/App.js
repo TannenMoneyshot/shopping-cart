@@ -27,7 +27,7 @@ class App extends Component{
         <CartHeader />
       </header>
       <main>
-        <CartItems cartItems = {cartItemList} />
+        <CartItems />
       </main>
       <footer>
         <CartFooter copyright="&copy;" year="2016" />
