@@ -14,6 +14,12 @@ const CartItems = ({cartItems}) =>(
     </div>
     {cartItems.map((cartItem) => <CartItem key = {cartItem.id} name = {cartItem.product.name} price = {cartItem.product.priceInCents} qty = {cartItem.quantity} />)}
   </div>
+  <small>Total Price: <b>${cartItems.reduce((acc, curr) => acc + curr.product.priceInCents * curr.quantity, 0) / 100}</b>
+</small>
 </div>
+
+
+
 );
+
 export default CartItems;
