@@ -5,11 +5,11 @@ const CartItem = (
   price,
   qty
   }) =>(
-<div class="list-group-item">
-  <div class="row">
-    <div class="col-md-8">{name}</div>
-    <div class="col-md-2">{price}</div>
-    <div class="col-md-2">{qty}</div>
+<div className="list-group-item">
+  <div className="row">
+    <div className="col-md-8">{name}</div>
+    <div className="col-md-2">{price}</div>
+    <div className="col-md-2">{qty}</div>
   </div>
 </div>
 );
