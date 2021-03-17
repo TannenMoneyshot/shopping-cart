@@ -8,30 +8,28 @@ import AddItem from './AddItem'
 class App extends Component {
 
   state = {
-    products: [
-      { id: 40, name: 'Mediocre Iron Watch', priceInCents: 399 },
-      { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 },
-      { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 },
-      { id: 43, name: 'Small Aluminum Keyboard', priceInCents: 2500 },
-      { id: 44, name: 'Practical Copper Plate', priceInCents: 1000 },
-      { id: 45, name: 'Awesome Bronze Pants', priceInCents: 399 },
-      { id: 46, name: 'Intelligent Leather Clock', priceInCents: 2999 },
-      { id: 47, name: 'Ergonomic Bronze Lamp', priceInCents: 40000 },
-      { id: 48, name: 'Awesome Leather Shoes', priceInCents: 3990 },
-    ],
-    cartItemsList: [
-      { id: 1, product: { id: 40, name: 'Mediocre Iron Watch', priceInCents: 399 }, quantity: 1 },
-      { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
-      { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
-    ]
+    products: [],
+    cartItemsList: []
+  }
+
+  async componentDidMount() {
+    const responseProducts = await fetch('http://localhost:8082/api/products')
+    const responseItems = await fetch('http://localhost:8082/api/items')
+    const jsonProducts = await responseProducts.json()
+    console.log(jsonProducts)
+    const jsonItems = await responseItems.json()
+    console.log(jsonItems)
+    this.setState({ products: jsonProducts, cartItemsList: jsonItems })
+    console.log(this.state)
+    
   }
 
   submitFunction = (itemToAdd) => {
     if (this.state.cartItemsList.find((item) => item.product.id === itemToAdd.product.id)) {
       let updatedItemsList = [...this.state.cartItemsList]
       console.log()
-      updatedItemsList[this.state.cartItemsList.findIndex((item) => item.product.id === itemToAdd.product.id )].quantity+= +itemToAdd.quantity
-      this.setState({ cartItemsList:updatedItemsList })
+      updatedItemsList[this.state.cartItemsList.findIndex((item) => item.product.id === itemToAdd.product.id)].quantity += +itemToAdd.quantity
+      this.setState({ cartItemsList: updatedItemsList })
     } else {
       let newCartListItem = { id: this.state.cartItemsList.length + 1, ...itemToAdd }
       this.setState({ cartItemsList: [...this.state.cartItemsList, newCartListItem] })
@@ -47,7 +45,7 @@ class App extends Component {
           <CartHeader />
         </header>
         <main>
-          <CartItems cartItems={this.state.cartItemsList} />
+          <CartItems cartItems={this.state.cartItemsList} products= {this.state.products} />
           <AddItem arrayOfProducts={this.state.products} submitFunction={this.submitFunction} />
         </main>
         <footer>

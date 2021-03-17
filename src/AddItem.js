@@ -20,7 +20,7 @@ state = {
                 </div>
                 <div className="form-group">
                     <label htmlFor="products">Products</label>
-                    <select class="custom-select" id="product" onChange = {(e) => this.updateProductToAddName(e)}>
+                    <select className="custom-select" id="product" onChange = {(e) => this.updateProductToAddName(e)}>
                         <option selected>Select an option...</option>
                         {this.props.arrayOfProducts.map((product) => <option value={product.id}>{product.name}</option> )}
                     </select>

@@ -1,7 +1,7 @@
 import React from 'react';
 import CartItem from './CartItem'
 
-const CartItems = ({cartItems}) =>(
+const CartItems = ({cartItems, products}) =>(
 <div className="container">
   <h1>Cart Items</h1>
   <div className="list-group">
@@ -12,9 +12,9 @@ const CartItems = ({cartItems}) =>(
         <div className="col-md-2">Quantity</div>
       </div>
     </div>
-    {cartItems.map((cartItem) => <CartItem key = {cartItem.id} name = {cartItem.product.name} price = {cartItem.product.priceInCents} qty = {cartItem.quantity} />)}
+    {cartItems.map((cartItem) => <CartItem key = {cartItem.id} name = {products.find((product) => product.id === cartItem.id).name} price = {products.find((product) => product.id === cartItem.id).priceInCents} qty = {cartItem.quantity} />)}
   </div>
-  <small>Total Price: <b>${cartItems.reduce((acc, curr) => acc + curr.product.priceInCents * curr.quantity, 0) / 100}</b>
+  <small>Total Price: <b>${cartItems.reduce((acc, curr) => acc + curr.priceInCents * curr.quantity, 0) / 100}</b>
 </small>
 </div>
 
