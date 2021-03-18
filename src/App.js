@@ -13,6 +13,12 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    await this.fetchItemsFromAPI()
+
+  }
+
+  fetchItemsFromAPI = async () => {
+
     const responseProducts = await fetch('http://localhost:8082/api/products')
     const responseItems = await fetch('http://localhost:8082/api/items')
     const jsonProducts = await responseProducts.json()
@@ -21,7 +27,7 @@ class App extends Component {
     console.log(jsonItems)
     this.setState({ products: jsonProducts, cartItemsList: jsonItems })
     console.log(this.state)
-    
+
   }
 
   submitFunction = (itemToAdd) => {
@@ -36,6 +42,31 @@ class App extends Component {
     }
   }
 
+  postItem = async (itemToAdd) => {
+    const potentialDuplicate = this.state.cartItemsList.find((item) => item.product_id === itemToAdd.product_id)
+    if (potentialDuplicate !== undefined) {
+      itemToAdd.quantity = parseInt(itemToAdd.quantity) + parseInt(potentialDuplicate.quantity)
+      await fetch(`http://localhost:8082/api/products/${potentialDuplicate.id}/items/${potentialDuplicate.id}`, {
+        method: 'DELETE',
+        body: JSON.stringify(potentialDuplicate),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }
+      })
+    }
+    await fetch('http://localhost:8082/api/items', {
+      method: 'POST',
+      body: JSON.stringify(itemToAdd),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    await this.fetchItemsFromAPI()
+  }
+
+
   render() {
 
 
@@ -45,8 +76,8 @@ class App extends Component {
           <CartHeader />
         </header>
         <main>
-          <CartItems cartItems={this.state.cartItemsList} products= {this.state.products} />
-          <AddItem arrayOfProducts={this.state.products} submitFunction={this.submitFunction} />
+          <CartItems cartItems={this.state.cartItemsList} products={this.state.products} />
+          <AddItem products={this.state.products} submitFunction={this.postItem} />
         </main>
         <footer>
           <CartFooter copyright="&copy;" year="2016" />

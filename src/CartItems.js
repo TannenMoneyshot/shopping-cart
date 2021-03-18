@@ -12,9 +12,9 @@ const CartItems = ({cartItems, products}) =>(
         <div className="col-md-2">Quantity</div>
       </div>
     </div>
-    {cartItems.map((cartItem) => <CartItem key = {cartItem.id} name = {products.find((product) => product.id === cartItem.id).name} price = {products.find((product) => product.id === cartItem.id).priceInCents} qty = {cartItem.quantity} />)}
+    {cartItems.map((cartItem) => <CartItem key = {cartItem.id} name = {products.find((product) => product.id === cartItem.product_id).name} price = {products.find((product) => product.id === cartItem.product_id).priceInCents} qty = {cartItem.quantity} />)}
   </div>
-  <small>Total Price: <b>${cartItems.reduce((acc, curr) => acc + curr.priceInCents * curr.quantity, 0) / 100}</b>
+  <small>Total Price: <b>${cartItems.reduce((acc, curr) => acc + products[curr.product_id -1 ].priceInCents * curr.quantity, 0) / 100}</b>
 </small>
 </div>
 
