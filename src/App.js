@@ -12,8 +12,6 @@ class App extends Component {
     cartItemsList: []
   }
 
-  API_URL = process.env.REACT_APP_API_URL
-
   async componentDidMount() {
     await this.fetchItemsFromAPI()
 
@@ -22,8 +20,8 @@ class App extends Component {
   fetchItemsFromAPI = async () => {
 
     
-    const responseProducts = await fetch(`${this.API_URL}/api/products`)
-    const responseItems = await fetch(`${this.API_URL}/api/items`)
+    const responseProducts = await fetch(`${process.env.REACT_APP_API_URL}/api/products`)
+    const responseItems = await fetch(`${process.env.REACT_APP_API_URL}/api/items`)
     const jsonProducts = await responseProducts.json()
     console.log(jsonProducts)
     const jsonItems = await responseItems.json()
@@ -49,7 +47,7 @@ class App extends Component {
     const potentialDuplicate = this.state.cartItemsList.find((item) => item.product_id === itemToAdd.product_id)
     if (potentialDuplicate !== undefined) {
       itemToAdd.quantity = parseInt(itemToAdd.quantity) + parseInt(potentialDuplicate.quantity)
-      await fetch(`${this.API_URL}/api/products/${potentialDuplicate.id}/items/${potentialDuplicate.id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/products/${potentialDuplicate.id}/items/${potentialDuplicate.id}`, {
         method: 'DELETE',
         body: JSON.stringify(potentialDuplicate),
         headers: {
@@ -58,7 +56,7 @@ class App extends Component {
         }
       })
     }
-    await fetch(`${this.API_URL}/api/items`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/api/items`, {
       method: 'POST',
       body: JSON.stringify(itemToAdd),
       headers: {
